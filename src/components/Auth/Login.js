@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import UseFormValidation from './useFormValidation'
+import useFormValidation from './useFormValidation';
+import validateLogin from './validateLogin';
 
 const INITIAL_STATE = {
 	name: '',
@@ -8,8 +9,14 @@ const INITIAL_STATE = {
 };
 
 const Login = () => {
-
-    const { handleSubmit, handleChange, values } = UseFormValidation(INITIAL_STATE);
+	const {
+		handleSubmit,
+		handleBlur,
+		handleChange,
+		values,
+		errors,
+		isSubmitting,
+	} = useFormValidation(INITIAL_STATE, validateLogin);
 	const [login, setLogin] = useState(true);
 
 	return (
@@ -29,22 +36,32 @@ const Login = () => {
 				)}
 				<input
 					onChange={handleChange}
+					onBlur={handleBlur}
 					type="email"
 					name="email"
+					className={errors.email && 'error-input'}
 					value={values.email}
 					placeholder="Your email"
 					autoComplete="off"
 				/>
+				{errors.email && <p className="error-text">{errors.email}</p>}
 				<input
 					onChange={handleChange}
+					onBlur={handleBlur}
 					type="password"
 					name="password"
+					className={errors.password && 'error-input'}
 					value={values.password}
 					placeholder={login ? 'Your password' : 'Choose a secure password '}
 				/>
-
+				{errors.password && <p className="error-text">{errors.password}</p>}
 				<div>
-					<button type="submit" className="button pointer mr2">
+					<button
+						type="submit"
+						className="button pointer mr2"
+						disabled={isSubmitting}
+						style={{ background: isSubmitting ? 'grey' : 'orange' }}
+					>
 						Submit
 					</button>
 					<button
