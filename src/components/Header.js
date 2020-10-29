@@ -7,7 +7,7 @@ const Header = () => {
 			<div className="flex">
 				<img src="/logo.png" alt="logo" className="logo" />
 				<NavLink to="/" className="header-title">
-					Hook News
+					News Link
 				</NavLink>
 				<NavLink to="/" className="header-link">
 					new
